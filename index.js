@@ -10,8 +10,15 @@ app.use(bodyParser.urlencoded({ extended: true}));
 
 const db = require("./models");
 
-db.sequelize.sync().then((req)=>{
+const router = require("./routes/tutorial.routes")
 
+app.use('/api/tutor',router)
+//
+// app.post("/insert",(req,res)=>{
+//     db.
+// })
+
+db.sequelize.sync({force:true}).then((req)=>{
 app.listen(3001,()=>{
     console.log("server is running...");
     });

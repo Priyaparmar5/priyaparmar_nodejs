@@ -1,11 +1,18 @@
-module.exports = app => {
     const tutorials = require('../controllers/tutorial.controller.js');
 
-    var router =  require("express").Router();
+    const router =  require("express").Router();
 
-    router.post("/",tutorials.create);
+    router.post("/add",tutorials.add);
 
-    router.get("/",tutorials.findAll);
+    router.get("/all",tutorials.getAll);
+    router.get("/getone", tutorials.getOne);
 
-    app.use('/api/tutorials',router);
-}
+    router.put("/:id", tutorials.update);
+
+    router.delete("/:id", tutorials.deletep);
+
+    // app.get("/select" ,(req,res)=>{
+    //     res.send("select");
+    // });
+
+   module.exports = router;
