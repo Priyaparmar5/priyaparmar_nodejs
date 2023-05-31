@@ -11,6 +11,8 @@
 
     router.post("/one-to-one", association.oneToOne);
 
+    router.post("/one-to-many", association.oneToMany);
+
   //  router.get("/query", association.rawQueryUser);
 
     router.put("/:id", association.update);

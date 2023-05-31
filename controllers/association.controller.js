@@ -24,6 +24,26 @@ const oneToOne = async (req, res) => {
   }
 };
 
+const oneToMany = async (req, res) => {
+  try {
+    const { firstName, lastName, email, parmanent_address, current_address } = req.body;
+
+    console.log(req.body,"reqqqq");
+    const user = await User.create({
+    
+      ...req.body
+    }, 
+    {
+      include:{model:Contact},
+    }
+    );
+    console.log("user",user);
+    res.status(200).json({ data: user });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // const oneToOne = async (req, res) => {
 //   try {
 //     var data = await User.create(
@@ -77,9 +97,12 @@ const getOne = async (req, res) => {
 const update = async (req, res) => {
   try {
     let id = req.params.id;
-    let data = await User.update({ where: { id: id } });
+    let user_id = req.params.user_id;
+    let data = await User.update(req.body,{ where: { id: id } });
+    let userdata = await Contact.update(req.body.Contact,{ where: { user_id: user_id } });
+
     console.log(data,"updatee");
-    res.status(200).send(data);
+    res.status(200).send(data,userdata);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -142,6 +165,7 @@ module.exports = {
   update,
   deletep,
   oneToOne,
-  add_contact
+  add_contact,
+  oneToMany
   //rawQueryUser,
 };
